@@ -1,0 +1,97 @@
+#!/bin/bash
+
+# Clear the console before starting
+  clear
+
+# Give permissions to the scripts
+  chmod 755 scripts/*
+
+# if firstboot file is not created launch toolchain set
+if test -e .fboot
+then
+   echo "Toolchain already set, going away..."
+else
+   echo "Launching toolchain set..."
+   echo "Press enter to continue"
+   read enterPress
+   scripts/set_toolchain_path
+   touch .fboot
+   echo DO NOT DELETE THIS FILE!!! > .fboot
+   chmod 440 > .fboot
+fi
+
+# Clear the console before starting
+  clear
+
+# Create bold and normal types of letter
+  bold=`tput bold`
+  normal=`tput sgr0`
+
+# Create a variable to store the version 
+  version=0.1 
+
+# Introducing test 
+  echo
+  echo "${bold}-----------------------------------"
+  echo " BroadcomCM kernel auto-maker menu"
+  echo "-----------------------------------"
+  echo "${normal} Version $version"
+  echo
+  echo
+
+# First question:
+  echo "${bold} Which device you would like to build?${normal} Choose a letter:"
+
+# Answers:
+  echo "   a. Cooperve"
+  echo "   b. Luisa"
+  echo "   c. Tassve"
+  echo "   d. Totoro"
+  echo
+  echo "   x. Exit"
+  echo "   r. Restart"
+
+# Read the letter the user gives
+  echo 
+  read enterLetter
+
+# Cooperve
+  if [ "$enterLetter" == "a" ]
+    then
+      export KBUILD_BCM_MENU=cooperve
+      scripts/choice_menu
+
+# Luisa
+  elif [ "$enterLetter" == "b" ]
+    then
+      export KBUILD_BCM_MENU=luisa
+      scripts/choice_menu
+
+# Tassve
+  elif [ "$enterLetter" == "c" ]
+    then
+      export KBUILD_BCM_MENU=tassve
+      scripts/choice_menu
+
+# Totoro
+  elif [ "$enterLetter" == "d" ]
+    then
+      export KBUILD_BCM_MENU=totoro
+      scripts/choice_menu
+
+# Restart
+  elif [ "$enterLetter" == "r" ]
+    then
+      ./menu
+
+# Exit
+  elif [ "$enterLetter" == "x" ]
+    then
+      exit 0
+
+# Other choice
+  else 
+    echo "Invalid option"
+    continue
+  
+  fi
