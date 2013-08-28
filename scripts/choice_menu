@@ -15,6 +15,7 @@ clear
 scripts/toolchain_path
 
 # Moving to correct path
+cd ../
 cd common
 
 # Make clean
@@ -29,7 +30,7 @@ echo "${bold} MAKE DISTCLEAN...${normal}"
 echo
   make distclean
   
-# Make cyanogenmod_cooperve_defconfig
+# Make cyanogenmod_device_defconfig
 echo
 echo "${bold} SELECTING THE DEFCONFIG --> cyanogenmod_$KBUILD_BCM_MENU'_defconfig'${normal}"
 echo

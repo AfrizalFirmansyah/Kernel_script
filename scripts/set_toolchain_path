@@ -7,11 +7,11 @@ echo
 echo " Where is your toolchain located?"
 echo " Normally it should be in '~/CodeSourcery/Sourcery_G++_Lite/bin/arm-none-eabi-'"
 echo
-echo " Enter the full path, without "" or '' and don't forget to add arm-eabi- or "
-echo " arm-none-eabi- according to your toolchain binaries name."
+echo " Enter the full path, without "" or '' or ~ (replace '~/' with '/home/$USER/ and don't forget to add "
+echo " arm-eabi- or arm-none-eabi- according to your toolchain binaries name."
 echo
 echo " Do not enter anything if your path is"
-echo " '~/CodeSourcery/Sourcery_G++_Lite/bin/arm-none-eabi-'"
+echo " '/home/$USER/CodeSourcery/Sourcery_G++_Lite/bin/arm-none-eabi-'"
 echo
 echo Insert here:
 
@@ -22,15 +22,18 @@ if [ "$enterPath" == "*" ]
 then
   # if the find is equal to the path so the toolchain is ok
   LD=$(find $enterPath'ld')
-  if [ "$LD" == "$enterPath'ld'" ]
+  ELD=$(echo $LD)
+  if [ "$ELD" == "$enterPath'ld'" ]
   then
      echo "Toolchain path is ok and has been set"
      # create the toolchain_path script
-     echo -e "
-#!/bin/bash \n
+     echo -e "#!/bin/bash \n
 # DO NOT DELETE THIS FILE!!! \n
 export ARCH=arm \n 
-export CROSS_COMPILE='$enterPath'" > scripts/toolchain_path
+export CROSS_COMPILE='$enterPath' \n
+echo Cross Compile and arch are exported! \n
+read enterKey" > scripts/toolchain_path
+     read enterKey
   else
      # if get some error or toolchain path not correct restart the script
      echo "Toolchain path is not ok, please retry"
@@ -40,16 +43,17 @@ export CROSS_COMPILE='$enterPath'" > scripts/toolchain_path
 # if enterPath is not inserted use the default path
 else
    # if the find is equal to the path so the toolchain is ok
-  LD2=$(find ~/CodeSourcery/Sourcery_G++_Lite/bin/arm-none-eabi-ld)
-  if [ "$LD2" == "~/CodeSourcery/Sourcery_G++_Lite/bin/arm-none-eabi-ld"]]
+  LD2=$(find /home/$USER/CodeSourcery/Sourcery_G++_Lite/bin/arm-none-eabi-ld)
+  ELD2=$(echo $LD2)
+  if [ "$ELD2" == "/home/$USER/CodeSourcery/Sourcery_G++_Lite/bin/arm-none-eabi-ld" ]
   then
      echo "Toolchain path is ok and has been set"
      # create the toolchain_path script
-     echo -e "
-#!/bin/bash \n
+     echo -e "#!/bin/bash \n
 # DO NOT DELETE THIS FILE!!! \n
 export ARCH=arm \n
 export CROSS_COMPILE='~/CodeSourcery/Sourcery_G++_Lite/bin/arm-none-eabi-'" > scripts/toolchain_path
+     read enterKey
   else
      # if get some error or toolchain path not correct restart the script
      echo "Toolchain path is not ok, please retry"
@@ -57,5 +61,3 @@ export CROSS_COMPILE='~/CodeSourcery/Sourcery_G++_Lite/bin/arm-none-eabi-'" > sc
      scripts/set_toolchain_path
   fi
 fi
-
-./menu
