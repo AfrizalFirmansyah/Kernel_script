@@ -27,6 +27,12 @@ echo "${bold} MAKE CLEAN...${normal}"
 echo
   make clean
 
+# Make distclean
+echo
+echo "${bold} MAKE DISTCLEAN...${normal}"
+echo
+  make distclean
+  
 # Make cyanogenmod_cooperve_defconfig
 echo
 echo "${bold} SELECTING THE DEFCONFIG --> cyanogenmod_cooperve_defconfig${normal}"
