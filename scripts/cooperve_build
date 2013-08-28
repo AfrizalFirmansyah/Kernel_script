@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Clear terminal
+clear
+
+# Create bold and normal types of letter
+bold=`tput bold`
+normal=`tput sgr0`
+
+# Write wich device we choose
+echo "${bold} Your device is Cooperve ${normal}"
+
+# Move to the good path
+cd ..
+cd Kernel/common/
+
+# Start configurations
+export ARCH=arm
+  clear
+
+# Need to be edited
+  export CROSS_COMPILE=/home/bieltv3/CodeSourcery/Sourcery_G++_Lite/bin/arm-none-eabi-
+
+# Make clean
+echo
+echo "${bold} MAKE CLEAN...${normal}"
+echo
+  make clean
+
+# Make distclean
+echo
+echo "${bold} MAKE DISTCLEAN...${normal}"
+echo
+  make distclean
+  
+# Make cyanogenmod_cooperve_defconfig
+echo
+echo "${bold} SELECTING THE DEFCONFIG --> cyanogenmod_cooperve_defconfig${normal}"
+echo
+  make cyanogenmod_cooperve_defconfig
+
+# Make menuconfig
+echo
+echo "${bold} LAUNCHING MENUCONFIG${normal}"
+echo
+  make menuconfig
+
+# WIP, do not close terminal
+read entertodddols
