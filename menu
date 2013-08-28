@@ -17,7 +17,7 @@ else
    scripts/set_toolchain_path
    touch .fboot
    echo DO NOT DELETE THIS FILE!!! > .fboot
-   chmod 440 > .fboot
+   chmod 440 .fboot
 fi
 
 # Clear the console before starting
