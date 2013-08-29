@@ -19,45 +19,119 @@
 # Clear the console
   clear
 
-# Set characters type
-  bold=`tput bold`
-  normal=`tput sgr0`
-
 # Moving to correct path
 cd ../
 cd common
 
 # Introducing test 
   echo
-  echo "${bold}-----------------------------------"
+  echo "${t_bold}-----------------------------------"
   echo " BroadcomCM kernel auto-maker menu"
   echo "-----------------------------------"
-  echo "${normal} Version $version"
+  echo "${t_normal} Version $version"
+  echo
+  echo "Device selected is $KBUILD_BCM_MENU"
   echo
   echo
 
 # Question:
-  echo "${bold} What you want to do?${normal} Choose a letter:"
+  echo "${t_bold} What you want to do?${t_normal} Choose a letter:"
 
 # Options:
   echo "   a. Make Menuconfig"
-  echo "   b. Make Menuconfig with saving the new .config to cyanogenmod_$KBUILD_BCM_MENU'_defconfig'"
+  echo "   b. Make Menuconfig with saving new config to cyanogenmod_$KBUILD_BCM_MENU''_defconfig"
+  echo "   c. Make Menuconfig with saving new config to input name"
   echo
-  echo "   c. Make another config"
+  echo "   d. Load another defconfig"
   echo
-  echo "   d. Make clean"
-  echo "   e. Make distclean"
+  echo "   e. Make clean"
+  echo "   f. Make distclean"
   echo
-  echo "   f. Make kernel zImage"
-  echo "   g. Make kernel zImage + boot.img with common ramdisk"
-  echo "   h. Make kernel zImage + boot.img with yours ramdisk"
+  echo "   g. Make kernel zImage"
+  echo "   h. Make kernel zImage + boot.img with common ramdisk"
+  echo "   i. Make kernel zImage + boot.img with yours ramdisk"
   echo
-  echo "   x. Exit"
-  echo "   r. Restart"
+  echo "   j. Exit"
+  echo "   k. Restart"
 
 # Read letter user gives
   read enterToolsLetter
 
 # If an option selected...
+if [ "$enterToolsLetter" == "a" ]
+then
+  make menuconfig -j`grep processor /proc/cpuinfo | wc -l`
+  ../BCMKAMM/scripts/tools_menu
 
+elif [ "$enterToolsLetter" == "b" ]
+  make menuconfig -j`grep processor /proc/cpuinfo | wc -l`
+  cp .config arch/arm/configs/cyanogenmod_$KBUILD_BCM_MENU''_defconfig
+  echo "Old cyanogenmod_$KBUILD_BCM_MENU""_defconfig has been replaced with new one"
+  echo "Press enter to continue..."
+  read enterKey1
+  ../BCMKAMM/scripts/tools_menu
 
+elif [ "$enterToolsLetter" == "c" ]
+  make menuconfig -j`grep processor /proc/cpuinfo | wc -l`
+  echo "Enter your new defconfig name... (excluding _defconfig)"
+  read enterName
+  if [ "$enterName" == "" ]
+    echo "The name could not be only _defconfig!!!"
+    echo "Press enter to retry..."
+    read enterKey2
+    ../BCMKAMM/scripts/tools_menu
+  else
+    cp .config arch/arm/configs/$enterName''_defconfig
+    echo "Config saved, press enter to continue"
+    read enterKey3
+    ../BCMKAMM/scripts/tools_menu
+  fi
+
+elif [ "$enterToolsLetter" == "d" ]
+    echo "Type the name of the config (including _defconfig if the name includes that)"
+    echo "The config must be located in arch/arm/configs"
+    read enterConfig
+    FN=$(find arch/arm/configs/$enterConfig)
+    if [ "$FN" == "arch/arm/configs/$enterConfig" ]
+      echo "Config exists, making now..."
+      make $enterConfig -j`grep processor /proc/cpuinfo | wc -l`
+      echo "New config made, press enter to continue..."
+      read enterKey4
+      ../BCMKAMM/scripts/tools_menu
+    else
+      echo "Config does not exist, please check the name and retry"
+      read enterKey5
+      ../BCMKAMM/scripts/tools_menu
+    fi
+
+elif [ "$enterToolsLetter" == "e" ]
+    echo "Making clean..."
+    make clean -j`grep processor /proc/cpuinfo | wc -l`
+    echo "Press enter to continue"
+    read enterKey6
+
+elif [ "$enterToolsLetter" == "f" ]
+    echo "Making dist clean..."
+    make distclean -j`grep processor /proc/cpuinfo | wc -l`
+    echo "Press enter to continue"
+    read enterKey7
+
+elif [ "$enterToolsLetter" == "g" ]
+    echo "Starting build of kernel..."
+    echo "Press enter to continue..."
+    read enterKey8
+    make -j`grep processor /proc/cpuinfo | wc -l`
+
+elif [ "$enterToolsLetter" == "h" ]
+    echo ZONE WORK IN PROGRESS...
+    read enterKey9
+
+elif [ "$enterToolsLetter" == "i" ]
+    echo ZONE WORK IN PROGRESS...
+    read enterKey10
+
+elif [ "$enterToolsLetter" == "j" ]
+    exit
+
+elif [ "$enterToolsLetter" == "k" ]
+    ../BCMKAMM/menu
