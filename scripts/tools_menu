@@ -19,9 +19,8 @@
 # Clear the console
   clear
 
-# Moving to correct path
-cd ../
-cd Kernel/common
+# Move here
+cd ../../kernel/common
 
 # Introducing test 
   echo
@@ -60,7 +59,7 @@ cd Kernel/common
 # If an option selected...
 if [ "$enterToolsLetter" == "a" ]
 then
-  make menuconfig -j`grep processor /proc/cpuinfo | wc -l`
+  make menuconfig
   ../../BCMKAMM/scripts/tools_menu
 
 elif [ "$enterToolsLetter" == "b" ]

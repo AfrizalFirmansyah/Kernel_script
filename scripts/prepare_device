@@ -26,7 +26,7 @@ clear
 
 scripts/toolchain_path
 
-# Temporary fix
+# Prepare for building the kernel
 export ARCH=arm 
 export CROSS_COMPILE=$toolChain
 
@@ -53,6 +53,7 @@ echo
   make cyanogenmod_$KBUILD_BCM_MENU""_defconfig
 
 # Press enter and go to the build menu
+echo
 echo "${t_bold} Press enter to go to build menu${t_normal}"
 
 read enterKey
