@@ -56,7 +56,9 @@
 # If an option selected...
   if [ "$enterLetter" == "a" ]
     then
-      make menuconfig
+      export simple_menuconfig=1
+      export save_new_config=0
+      export input_config_name=0
       ../../BCMKAMM/scripts/make_menuconfig
 
   elif [ "$enterLetter" == "b" ]
