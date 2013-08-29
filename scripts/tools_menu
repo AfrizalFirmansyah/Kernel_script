@@ -1,0 +1,63 @@
+#!/bin/bash
+
+#    BroadcomCM kernel auto-maker menu - scripts/tools_menu
+#    Copyright (C) 2013  Team BroadcomCM
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Clear the console
+  clear
+
+# Set characters type
+  bold=`tput bold`
+  normal=`tput sgr0`
+
+# Moving to correct path
+cd ../
+cd common
+
+# Introducing test 
+  echo
+  echo "${bold}-----------------------------------"
+  echo " BroadcomCM kernel auto-maker menu"
+  echo "-----------------------------------"
+  echo "${normal} Version $version"
+  echo
+  echo
+
+# Question:
+  echo "${bold} What you want to do?${normal} Choose a letter:"
+
+# Options:
+  echo "   a. Make Menuconfig"
+  echo "   b. Make Menuconfig with saving the new .config to cyanogenmod_$KBUILD_BCM_MENU'_defconfig'"
+  echo
+  echo "   c. Make another config"
+  echo
+  echo "   d. Make clean"
+  echo "   e. Make distclean"
+  echo
+  echo "   f. Make kernel zImage"
+  echo "   g. Make kernel zImage + boot.img with common ramdisk"
+  echo "   h. Make kernel zImage + boot.img with yours ramdisk"
+  echo
+  echo "   x. Exit"
+  echo "   r. Restart"
+
+# Read letter user gives
+  read enterToolsLetter
+
+# If an option selected...
+
+
