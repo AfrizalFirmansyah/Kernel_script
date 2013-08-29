@@ -36,7 +36,7 @@ cd kernel
 
 # Renaming modules dir
 echo "Renaming modules dir from 'modules_$KBUILD_BCM_MENU' to 'modules'"
-# mv modules_$KBUILD_BCM_MENU modules
+mv modules_$KBUILD_BCM_MENU modules
 cd common
 
 # Make clean

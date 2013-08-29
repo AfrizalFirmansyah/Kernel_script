@@ -21,8 +21,6 @@
 
 # Menucofnig variables
   export Option=""
-  export save_new_config=0
-  export input_config_name=0
 
 # Introducing test 
   echo
