@@ -46,17 +46,16 @@ read enterPath
   ELD=$(echo $LD)
 
 # If the find is equal to the path the toolchain is ok
+
 if [ "$ELD" == "$enterPath"ld"" ]
-  then  
+ then
     echo
     echo "${t_bold} Toolchain path is ok and has been set, press enter to continue...${t_normal}"
     # Create the toolchain_path script
     echo -e "#!/bin/bash \n
-# DO NOT DELETE THIS FILE!!! \n
-export ARCH=arm \n 
-export CROSS_COMPILE=$enterPath \n
-echo export ARCH=arm \n
-echo export CROSS_COMPILE=$enterPath"> scripts/toolchain_path
+# DO NOT DELETE THIS FILE!!! \n 
+# Variable to store toolchain \n
+export toolChain=$enterPath">scripts/toolchain_path
     read enterKey
 else
     # If get some error or toolchain path not correct restart the script

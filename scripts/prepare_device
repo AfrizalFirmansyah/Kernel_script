@@ -26,6 +26,10 @@ clear
 
 scripts/toolchain_path
 
+# Temporary fix
+export ARCH=arm 
+export CROSS_COMPILE=$toolChain
+
 # Moving to correct path
 cd ../
 cd kernel/common

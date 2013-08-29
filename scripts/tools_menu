@@ -30,7 +30,7 @@ cd Kernel/common
   echo "-----------------------------------"
   echo "${t_normal} Version $version"
   echo
-  echo "Device selected is $KBUILD_BCM_MENU"
+  echo " Device selected is $KBUILD_BCM_MENU"
   echo
   echo
 
