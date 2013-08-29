@@ -28,7 +28,7 @@ scripts/toolchain_path
 
 # Moving to correct path
 cd ../
-cd Kernel/common
+cd kernel/common
 
 # Make clean
 echo
@@ -53,4 +53,4 @@ echo "${t_bold} Press enter to go to build menu${t_normal}"
 
 read enterKey
 
-../BCMKAMM/scripts/tools_menu
+../../BCMKAMM/scripts/tools_menu

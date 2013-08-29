@@ -61,7 +61,7 @@ cd Kernel/common
 if [ "$enterToolsLetter" == "a" ]
 then
   make menuconfig -j`grep processor /proc/cpuinfo | wc -l`
-  ../BCMKAMM/scripts/tools_menu
+  ../../BCMKAMM/scripts/tools_menu
 
 elif [ "$enterToolsLetter" == "b" ]
   make menuconfig -j`grep processor /proc/cpuinfo | wc -l`
@@ -69,7 +69,7 @@ elif [ "$enterToolsLetter" == "b" ]
   echo "Old cyanogenmod_$KBUILD_BCM_MENU""_defconfig has been replaced with new one"
   echo "Press enter to continue..."
   read enterKey1
-  ../BCMKAMM/scripts/tools_menu
+  ../../BCMKAMM/scripts/tools_menu
 
 elif [ "$enterToolsLetter" == "c" ]
   make menuconfig -j`grep processor /proc/cpuinfo | wc -l`
@@ -79,12 +79,12 @@ elif [ "$enterToolsLetter" == "c" ]
     echo "The name could not be only _defconfig!!!"
     echo "Press enter to retry..."
     read enterKey2
-    ../BCMKAMM/scripts/tools_menu
+    ../../BCMKAMM/scripts/tools_menu
   else
     cp .config arch/arm/configs/$enterName''_defconfig
     echo "Config saved, press enter to continue"
     read enterKey3
-    ../BCMKAMM/scripts/tools_menu
+    ../../BCMKAMM/scripts/tools_menu
   fi
 
 elif [ "$enterToolsLetter" == "d" ]
@@ -97,11 +97,11 @@ elif [ "$enterToolsLetter" == "d" ]
       make $enterConfig -j`grep processor /proc/cpuinfo | wc -l`
       echo "New config made, press enter to continue..."
       read enterKey4
-      ../BCMKAMM/scripts/tools_menu
+      ../../BCMKAMM/scripts/tools_menu
     else
       echo "Config does not exist, please check the name and retry"
       read enterKey5
-      ../BCMKAMM/scripts/tools_menu
+      ../../BCMKAMM/scripts/tools_menu
     fi
 
 elif [ "$enterToolsLetter" == "e" ]
@@ -109,29 +109,34 @@ elif [ "$enterToolsLetter" == "e" ]
     make clean -j`grep processor /proc/cpuinfo | wc -l`
     echo "Press enter to continue"
     read enterKey6
+    ../../BCMKAMM/scripts/tools_menu
 
 elif [ "$enterToolsLetter" == "f" ]
     echo "Making dist clean..."
     make distclean -j`grep processor /proc/cpuinfo | wc -l`
     echo "Press enter to continue"
     read enterKey7
+    ../../BCMKAMM/scripts/tools_menu
 
 elif [ "$enterToolsLetter" == "g" ]
     echo "Starting build of kernel..."
     echo "Press enter to continue..."
     read enterKey8
     make -j`grep processor /proc/cpuinfo | wc -l`
+    ../../BCMKAMM/scripts/tools_menu
 
 elif [ "$enterToolsLetter" == "h" ]
     echo ZONE WORK IN PROGRESS...
     read enterKey9
+    ../../BCMKAMM/scripts/tools_menu
 
 elif [ "$enterToolsLetter" == "i" ]
     echo ZONE WORK IN PROGRESS...
     read enterKey10
+    ../../BCMKAMM/scripts/tools_menu
 
 elif [ "$enterToolsLetter" == "j" ]
     exit
 
 elif [ "$enterToolsLetter" == "k" ]
-    ../BCMKAMM/menu
+    ../../BCMKAMM/menu
