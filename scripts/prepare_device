@@ -19,12 +19,8 @@
 # Clear terminal
 clear
 
-# Create bold and normal types of letter
-bold=`tput bold`
-normal=`tput sgr0`
-
 # Write wich device we choose
-echo "${bold} Your device is $KBUILD_BCM_MENU ${normal}"
+echo "${t_bold} Your device is $KBUILD_BCM_MENU ${t_normal}"
 
 clear
 
@@ -36,25 +32,25 @@ cd common
 
 # Make clean
 echo
-echo "${bold} MAKE CLEAN...${normal}"
+echo "${t_bold} MAKE CLEAN...${t_normal}"
 echo
   make clean
 
 # Make distclean
 echo
-echo "${bold} MAKE DISTCLEAN...${normal}"
+echo "${t_bold} MAKE DISTCLEAN...${t_normal}"
 echo
   make distclean
   
 # Make cyanogenmod_device_defconfig
 echo
-echo "${bold} SELECTING THE DEFCONFIG --> cyanogenmod_$KBUILD_BCM_MENU'_defconfig'${normal}"
+echo "${t_bold} SELECTING THE DEFCONFIG --> cyanogenmod_$KBUILD_BCM_MENU""_defconfig${t_normal}"
 echo
-  make cyanogenmod_$KBUILD_BCM_MENU'_defconfig'
+  make cyanogenmod_$KBUILD_BCM_MENU""_defconfig
 
 # Press enter and go to the build menu
-echo "${bold} Press enter to go to build menu${normal}"
+echo "${t_bold} Press enter to go to build menu${t_normal}"
 
 read enterKey
 
-scripts/tools_menu
+../BCMKAMM/scripts/tools_menu

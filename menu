@@ -40,23 +40,23 @@ fi
   clear
 
 # Create bold and normal types of letter
-  bold=`tput bold`
-  normal=`tput sgr0`
+  export t_bold=`tput bold`
+  export t_normal=`tput sgr0`
 
 # Create a variable to store the version 
-  version=0.1 
+  export version=0.1 
 
 # Introducing test 
   echo
-  echo "${bold}-----------------------------------"
+  echo "${t_bold}-----------------------------------"
   echo " BroadcomCM kernel auto-maker menu"
   echo "-----------------------------------"
-  echo "${normal} Version $version"
+  echo "${t_normal} Version $version"
   echo
   echo
 
 # First question:
-  echo "${bold} Which device you would like to build?${normal} Choose a letter:"
+  echo "${t_bold} Which device you would like to build?${t_normal} Choose a letter:"
 
 # Answers:
   echo "   a. Cooperve"
