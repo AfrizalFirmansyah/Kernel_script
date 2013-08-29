@@ -62,7 +62,7 @@ if [ "$ELD" == "$enterPath"ld"" ]
     export ARCH=arm \n 
     export CROSS_COMPILE=$enterPath \n
     echo ARCH=arm
-    echo CROSS_COMPILE=/home/bieltv3/CodeSourcery/Sourcery_G++_Lite/bin/arm-none-eabi- "> scripts/toolchain_path
+    echo CROSS_COMPILE=$enterPath "> scripts/toolchain_path
 
 else
     # If get some error or toolchain path not correct restart the script
