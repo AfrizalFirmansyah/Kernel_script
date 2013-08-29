@@ -19,6 +19,11 @@
 # Clear the console
   clear
 
+# Menucofnig variables
+  export Option=""
+  export save_new_config=0
+  export input_config_name=0
+
 # Introducing test 
   echo
   echo "${t_bold}-----------------------------------"
@@ -53,26 +58,37 @@
 # Read letter user gives
   read enterLetter
 
-# If an option selected...
+# OPTION A
   if [ "$enterLetter" == "a" ]
     then
-      make menuconfig
-      ../../BCMKAMM/scripts/tools_menu
 
+      Option="a"
+
+      # Start menuconfig scripts
+      ../../BCMKAMM/scripts/make_menuconfig
+
+
+# OPTION B
   elif [ "$enterLetter" == "b" ]
     then
-      export simple_menuconfig=0
-      export save_new_config=1
-      export input_config_name=0
+
+      Option="b"
+      
+      # Start menuconfig scripts
       ../../BCMKAMM/scripts/make_menuconfig
 
+
+# OPTION C
   elif [ "$enterLetter" == "c" ]
     then
-      export simple_menuconfig=0
-      export save_new_config=0
-      export input_config_name=1
+
+       Option="c"
+      
+      # Start menuconfig scripts
       ../../BCMKAMM/scripts/make_menuconfig
 
+
+# OPTION D
   elif [ "$enterLetter" == "d" ]
     then
       ../../BCMKAMM/scripts/load_new_config
@@ -98,7 +114,7 @@
       echo "Starting build of kernel..."
       echo "Press enter to continue..."
       read enterKey8
-      make -j`grep processor /proc/cpuinfo | wc -l`
+      make
       ../../BCMKAMM/scripts/tools_menu
 
   elif [ "$enterLetter" == "h" ]

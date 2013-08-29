@@ -16,43 +16,62 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Clear the console
-  clear
-
 # Make menuconfig
   make menuconfig -j`grep processor /proc/cpuinfo | wc -l`
-  if [ "$simple_menuconfig" == "1" ]
+  
+
+# OPTION A - Simple menuconfig
+  if [ "$Option" == "a" ]
    then
-    echo "Press enter to continue..."
+    echo "New configuration saved, press enter to continue..."
+    read enterkey
+
+    # Come back to menu
     ../../BCMKAMM/scripts/tools_menu
   fi
 
-# If export is active save new config without renaming
-  if [ "$save_new_config" == "1" ]
-   then
-    make menuconfig -j`grep processor /proc/cpuinfo | wc -l`
-    cp .config arch/arm/configs/cyanogenmod_$KBUILD_BCM_MENU''_defconfig
-    echo "Old cyanogenmod_$KBUILD_BCM_MENU""_defconfig has been replaced with new one"
-    echo "Press enter to continue..."
-    read enterKey
-    ../../BCMKAMM/scripts/tools_menu
-  fi
 
-# If export is active let the user input the new config name and save it
-  if [ "$input_config_name" == "1" ]
-   then
-    echo "Enter your new defconfig name... (excluding _defconfig)"
-    read enterName
-    if [ "$enterName" == "" ]
-     then
-      echo "The name could not be only _defconfig!!!"
-      echo "Press enter to retry..."
+# OPTION B - Save on original defconfig file
+  if [ "$Option" == "b" ]
+   then    
+      # Copy the modded .config
+      cp .config arch/arm/configs/cyanogenmod_$KBUILD_BCM_MENU''_defconfig
+      echo "Old cyanogenmod_$KBUILD_BCM_MENU""_defconfig has been replaced with new one"
+      echo "Press enter to continue..."
       read enterKey
+      
+      # Come back to menu
       ../../BCMKAMM/scripts/tools_menu
-    else
-      cp .config arch/arm/configs/$enterName''_defconfig
-      echo "Config saved, press enter to continue"
-      read enterKey
-      ../../BCMKAMM/scripts/tools_menu
-    fi
-  fi
+   fi
+
+
+# OPTION C - Create new defconfig file
+  if [ "$Option" == "c" ]
+    then
+      # Enter the config name
+      echo "Enter your new defconfig name... (excluding _defconfig)"
+      read enterName
+
+      # If nothing on name
+      if [ "$enterName" == "" ]
+        then
+        echo "You must choose a name for your defconfig"
+        echo "Press enter to retry..."
+        read enterKey
+        
+        # Restart script
+        ../../BCMKAMM/scripts/tools_menu
+
+      # If there is name
+      else
+
+        # Copy the file
+        cp .config arch/arm/configs/$enterName''_defconfig
+        echo "Config saved, press enter to continue"
+        read enterKey
+
+        # Come back to menu
+        ../../BCMKAMM/scripts/tools_menu
+      
+      fi
+fi
