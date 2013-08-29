@@ -28,7 +28,7 @@ scripts/toolchain_path
 
 # Moving to correct path
 cd ../
-cd common
+cd Kernel/common
 
 # Make clean
 echo

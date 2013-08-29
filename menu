@@ -22,13 +22,29 @@
 # Give permissions to the scripts
   chmod 755 scripts/*
 
+# Create a variable to store the version 
+  export version=0.1 
+
+# Create bold and normal types of letter
+  export t_bold=`tput bold`
+  export t_normal=`tput sgr0`
+
+# Introducing test 
+  echo
+  echo "${t_bold}-----------------------------------"
+  echo " BroadcomCM kernel auto-maker menu"
+  echo "-----------------------------------"
+  echo "${t_normal} Version $version"
+  echo
+  echo
+
 # if firstboot file is not created launch toolchain set
 if test -e .fboot
 then
-   echo "Toolchain already set, going away..."
+   echo " Toolchain already set, going away..."
 else
-   echo "Launching toolchain set..."
-   echo "Press enter to continue"
+   echo " Launching toolchain set..."
+   echo " Press enter to continue"
    read enterPress
    scripts/set_toolchain_path
    touch .fboot
@@ -38,13 +54,6 @@ fi
 
 # Clear the console before starting
   clear
-
-# Create bold and normal types of letter
-  export t_bold=`tput bold`
-  export t_normal=`tput sgr0`
-
-# Create a variable to store the version 
-  export version=0.1 
 
 # Introducing test 
   echo

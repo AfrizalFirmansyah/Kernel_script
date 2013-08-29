@@ -21,7 +21,7 @@
 
 # Moving to correct path
 cd ../
-cd common
+cd Kernel/common
 
 # Introducing test 
   echo

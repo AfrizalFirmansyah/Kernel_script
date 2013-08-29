@@ -18,38 +18,59 @@
 
 clear
 
+# Create bold and normal types of letter
+export t_bold=`tput bold`
+export t_normal=`tput sgr0`
+
+# Introducing test 
+  echo
+  echo "${t_bold}-----------------------------------"
+  echo " BroadcomCM kernel auto-maker menu"
+  echo "-----------------------------------"
+  echo "${t_normal} Version $version"
+  echo
+  echo
+
 # Give path to toolchain and various exports
+echo "${t_bold} Where is your toolchain located?${t_normal}"
+echo " Normally it should be in /home/$USER/CodeSourcery/Sourcery_G++_Lite/bin/arm-none-eabi-"
 echo
-echo " Where is your toolchain located?"
-echo " Normally it should be in '/home/$USER/CodeSourcery/Sourcery_G++_Lite/bin/arm-none-eabi-'"
-echo
-echo " Enter the full path, without "" or '' or ~ (replace '~/' with '/home/$USER/ and don't forget to add "
+echo " Enter the full path (replace '~/' with '/home/$USER/ and don't forget to add "
 echo " arm-eabi- or arm-none-eabi- according to your toolchain binaries name."
 echo
-echo
-echo Insert here:
+echo " Insert here:"
 
 read enterPath
 
-# if the find is equal to the path the toolchain is ok
-LD=$(find $enterPath''ld)
-ELD=$(echo $LD)
+# Store a variable LD with a file inside toolchain
+  LD=$(find $enterPath''ld)
+
+# Create another variable that stores the last one
+  ELD=$(echo $LD)
+
+# If the find is equal to the path the toolchain is ok
 if [ "$ELD" == "$enterPath"ld"" ]
-then
-   echo "Toolchain path is ok and has been set"
-   # create the toolchain_path script
-   echo -e "#!/bin/bash \n
-# DO NOT DELETE THIS FILE!!! \n
-export ARCH=arm \n 
-export CROSS_COMPILE=$enterPath \n
-echo Cross Compile and arch are exported! \n
-read enterKey" > scripts/toolchain_path
-   read enterKey
+  then  
+    echo
+    echo " Press enter to start building the kernel..."    
+
+    # Create the toolchain_path script
+    echo -e "#!/bin/bash \n
+    # DO NOT DELETE THIS FILE!!! \n
+    cd ../
+    cd Kernel/common \n 
+    export ARCH=arm \n 
+    export CROSS_COMPILE=$enterPath \n
+    echo ARCH=arm
+    echo CROSS_COMPILE=/home/bieltv3/CodeSourcery/Sourcery_G++_Lite/bin/arm-none-eabi- "> scripts/toolchain_path
+
 else
-   # if get some error or toolchain path not correct restart the script
-   echo "Toolchain path is not ok, please retry"
-   read enterKey
-   scripts/set_toolchain_path
+    # If get some error or toolchain path not correct restart the script
+    echo "${t_bold} Toolchain path is not correct, please retry${t_normal}"
+    read enterKey
+    scripts/set_toolchain_path
+
 fi
 
+# Give permissions to the script created
 chmod 777 scripts/toolchain_path
