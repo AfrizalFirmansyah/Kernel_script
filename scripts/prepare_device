@@ -34,6 +34,10 @@ export CROSS_COMPILE=$toolChain
 cd ../
 cd kernel/common
 
+# Renaming modules dir
+echo "Renaming modules dir from 'modules_$KBUILD_BCM_MENU' to 'modules'"
+mv ../modules_$KBUILD_BCM_MENU ../modules
+
 # Make clean
 echo
 echo "${t_bold} MAKE CLEAN...${t_normal}"

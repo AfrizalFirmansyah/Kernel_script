@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# clear the console
+clear
+
+# rename modules dir
+echo "Cleaning up..."
+mv ../modules ../modules_$KBUILD_BCM_MENU
+
+# press enter to exit
+echo "Press enter to exit"
+read enterKey
+exit 0
