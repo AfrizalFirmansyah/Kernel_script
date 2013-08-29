@@ -54,97 +54,71 @@
   read enterLetter
 
 # If an option selected...
-if [ "$enterLetter" == "a" ]
- then
-  make menuconfig
-  ../../BCMKAMM/scripts/tools_menu
+  if [ "$enterLetter" == "a" ]
+    then
+      export simple_menuconfig=1
+      export save_new_config=0
+      export input_config_name=0
+      ../../BCMKAMM/scripts/make_menuconfig
 
-elif [ "$enterLetter" == "b" ]
- then
-  make menuconfig -j`grep processor /proc/cpuinfo | wc -l`
-  cp .config arch/arm/configs/cyanogenmod_$KBUILD_BCM_MENU''_defconfig
-  echo "Old cyanogenmod_$KBUILD_BCM_MENU""_defconfig has been replaced with new one"
-  echo "Press enter to continue..."
-  read enterKey1
-  ../../BCMKAMM/scripts/tools_menu
+  elif [ "$enterLetter" == "b" ]
+    then
+      export simple_menuconfig=0
+      export save_new_config=1
+      export input_config_name=0
+      ../../BCMKAMM/scripts/make_menuconfig
 
-elif [ "$enterLetter" == "c" ]
- then
-  make menuconfig -j`grep processor /proc/cpuinfo | wc -l`
-  echo "Enter your new defconfig name... (excluding _defconfig)"
-  read enterName
-  if [ "$enterName" == "" ]
-   then
-    echo "The name could not be only _defconfig!!!"
-    echo "Press enter to retry..."
-    read enterKey2
-    ../../BCMKAMM/scripts/tools_menu
-  else
-    cp .config arch/arm/configs/$enterName''_defconfig
-    echo "Config saved, press enter to continue"
-    read enterKey3
-    ../../BCMKAMM/scripts/tools_menu
-  fi
+  elif [ "$enterLetter" == "c" ]
+    then
+      export simple_menuconfig=0
+      export save_new_config=0
+      export input_config_name=1
+      ../../BCMKAMM/scripts/make_menuconfig
 
-elif [ "$enterLetter" == "d" ]
- then
-  echo "Type the name of the config (including _defconfig if the name includes that)"
-  echo "The config must be located in arch/arm/configs"
-  read enterConfig
-  FN=$(find arch/arm/configs/$enterConfig)
-  if [ "$FN" == "arch/arm/configs/$enterConfig" ]
-   then
-    echo "Config exists, making now..."
-    make $enterConfig -j`grep processor /proc/cpuinfo | wc -l`
-    echo "New config made, press enter to continue..."
-    read enterKey4
-    ../../BCMKAMM/scripts/tools_menu
-  else
-    echo "Config does not exist, please check the name and retry"
-    read enterKey5
-    ../../BCMKAMM/scripts/tools_menu
-  fi
+  elif [ "$enterLetter" == "d" ]
+    then
+      ../../BCMKAMM/scripts/load_new_config
 
-elif [ "$enterLetter" == "e" ]
- then
-  echo "Making clean..."
-  make clean -j`grep processor /proc/cpuinfo | wc -l`
-  echo "Press enter to continue"
-  read enterKey6
-  ../../BCMKAMM/scripts/tools_menu
+  elif [ "$enterLetter" == "e" ]
+    then
+      echo "Making clean..."
+      make clean -j`grep processor /proc/cpuinfo | wc -l`
+      echo "Press enter to continue"
+      read enterKey6
+      ../../BCMKAMM/scripts/tools_menu
 
-elif [ "$enterLetter" == "f" ]
- then
-  echo "Making dist clean..."
-  make distclean -j`grep processor /proc/cpuinfo | wc -l`
-  echo "Press enter to continue"
-  read enterKey7
-  ../../BCMKAMM/scripts/tools_menu
+  elif [ "$enterLetter" == "f" ]
+    then
+      echo "Making dist clean..."
+      make distclean -j`grep processor /proc/cpuinfo | wc -l`
+      echo "Press enter to continue"
+      read enterKey7
+      ../../BCMKAMM/scripts/tools_menu
 
-elif [ "$enterLetter" == "g" ]
- then
-  echo "Starting build of kernel..."
-  echo "Press enter to continue..."
-  read enterKey8
-  make -j`grep processor /proc/cpuinfo | wc -l`
-  ../../BCMKAMM/scripts/tools_menu
+  elif [ "$enterLetter" == "g" ]
+    then
+      echo "Starting build of kernel..."
+      echo "Press enter to continue..."
+      read enterKey8
+      make -j`grep processor /proc/cpuinfo | wc -l`
+      ../../BCMKAMM/scripts/tools_menu
 
-elif [ "$enterLetter" == "h" ]
- then
-  echo ZONE WORK IN PROGRESS...
-  read enterKey9
-  ../../BCMKAMM/scripts/tools_menu
+  elif [ "$enterLetter" == "h" ]
+    then
+      echo ZONE WORK IN PROGRESS...
+      read enterKey9
+      ../../BCMKAMM/scripts/tools_menu
 
-elif [ "$enterLetter" == "i" ]
- then
-  echo ZONE WORK IN PROGRESS...
-  read enterKey10
-  ../../BCMKAMM/scripts/tools_menu
+  elif [ "$enterLetter" == "i" ]
+    then
+      echo ZONE WORK IN PROGRESS...
+      read enterKey10
+      ../../BCMKAMM/scripts/tools_menu
 
-elif [ "$enterLetter" == "j" ]
- then
-  ../../BCMKAMM/scripts/exit_script
+  elif [ "$enterLetter" == "j" ]
+    then
+      ../../BCMKAMM/scripts/exit_script
 
-elif [ "$enterLetter" == "k" ]
- then
-  ../../BCMKAMM/menu
+  elif [ "$enterLetter" == "k" ]
+    then
+      ../../BCMKAMM/menu

@@ -1,0 +1,58 @@
+#!/bin/bash
+
+#    BroadcomCM kernel auto-maker menu - scripts/tools_menu
+#    Copyright (C) 2013  Team BroadcomCM
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Clear the console
+  clear
+
+# Make menuconfig
+  make menuconfig -j`grep processor /proc/cpuinfo | wc -l`
+  if [ "$simple_menuconfig" == "1" ]
+   then
+    echo "Press enter to continue..."
+    ../../BCMKAMM/scripts/tools_menu
+  fi
+
+# If export is active save new config without renaming
+  if [ "$save_new_config" == "1" ]
+   then
+    make menuconfig -j`grep processor /proc/cpuinfo | wc -l`
+    cp .config arch/arm/configs/cyanogenmod_$KBUILD_BCM_MENU''_defconfig
+    echo "Old cyanogenmod_$KBUILD_BCM_MENU""_defconfig has been replaced with new one"
+    echo "Press enter to continue..."
+    read enterKey
+    ../../BCMKAMM/scripts/tools_menu
+  fi
+
+# If export is active let the user input the new config name and save it
+  if [ "$input_config_name" == "1" ]
+   then
+    echo "Enter your new defconfig name... (excluding _defconfig)"
+    read enterName
+    if [ "$enterName" == "" ]
+     then
+      echo "The name could not be only _defconfig!!!"
+      echo "Press enter to retry..."
+      read enterKey
+      ../../BCMKAMM/scripts/tools_menu
+    else
+      cp .config arch/arm/configs/$enterName''_defconfig
+      echo "Config saved, press enter to continue"
+      read enterKey
+      ../../BCMKAMM/scripts/tools_menu
+    fi
+  fi

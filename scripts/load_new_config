@@ -1,0 +1,40 @@
+#!/bin/bash
+ 
+#    BroadcomCM kernel auto-maker menu - scripts/tools_menu
+#    Copyright (C) 2013  Team BroadcomCM
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+  
+# Clear the console
+  clear
+
+# Insert the config name and test if existing
+  echo "Type the name of the config (including _defconfig if the name includes that)"
+  echo "The config must be located in arch/arm/configs"
+  read enterConfig
+  # Create a variable that stores command for see if config is existing
+  FN=$(find arch/arm/configs/$enterConfig)
+  # If the variable returns same as config path then the config is ok
+  if [ "$FN" == "arch/arm/configs/$enterConfig" ]
+   then
+    echo "Config exists, making now..."
+    make $enterConfig -j`grep processor /proc/cpuinfo | wc -l`
+    echo "New config made, press enter to continue..."
+    read enterKey
+    ../../BCMKAMM/scripts/tools_menu
+  else
+    echo "Config does not exist, please check the name and retry"
+    read enterKey
+    ../../BCMKAMM/scripts/tools_menu
+  fi
