@@ -49,7 +49,7 @@ read enterPath
 if [ "$ELD" == "$enterPath"ld"" ]
   then  
     echo
-    echo "Toolchain path is ok and has been set..."
+    echo "${t_bold} Toolchain path is ok and has been set, press enter to continue...${t_normal}"
     # Create the toolchain_path script
     echo -e "#!/bin/bash \n
 # DO NOT DELETE THIS FILE!!! \n
