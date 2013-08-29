@@ -36,7 +36,7 @@
    then    
       # Copy the modded .config
       cp .config arch/arm/configs/cyanogenmod_$KBUILD_BCM_MENU''_defconfig
-      echo "Old cyanogenmod_$KBUILD_BCM_MENU""_defconfig has been replaced with new one"
+      echo "Old defconfig has been replaced with new one"
       echo "Press enter to continue..."
       read enterKey
       

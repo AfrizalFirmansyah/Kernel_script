@@ -30,12 +30,17 @@ scripts/toolchain_path
 export ARCH=arm 
 export CROSS_COMPILE=$toolChain
 
+# Add a defconfig variable
+export defconfig=""
+defconfig=cyanogenmod_$KBUILD_BCM_MENU""_defconfig
+
 # Moving to correct path
 cd ..
 cd kernel
 
 # Renaming modules dir
-echo "Renaming modules dir from 'modules_$KBUILD_BCM_MENU' to 'modules'"
+echo
+echo " Renaming modules dir from 'modules_$KBUILD_BCM_MENU' to 'modules'"
 mv modules_$KBUILD_BCM_MENU modules
 cd common
 
@@ -53,9 +58,9 @@ echo
   
 # Make cyanogenmod_device_defconfig
 echo
-echo "${t_bold} SELECTING THE DEFCONFIG --> cyanogenmod_$KBUILD_BCM_MENU""_defconfig${t_normal}"
+echo "${t_bold} SELECTING THE DEFCONFIG --> $defconfig${t_normal}"
 echo
-  make cyanogenmod_$KBUILD_BCM_MENU""_defconfig
+  make $defconfig
 
 # Press enter and go to the build menu
 echo

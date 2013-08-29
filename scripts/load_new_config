@@ -19,22 +19,47 @@
 # Clear the console
   clear
 
+# Variale defconfig changed to custom
+  export defconfig="custom"
+
+# Introducing text 
+  echo
+  echo "${t_bold}-----------------------------------"
+  echo " BroadcomCM kernel auto-maker menu"
+  echo "-----------------------------------"
+  echo "${t_normal} Version $version"
+  echo
+
 # Insert the config name and test if existing
-  echo "Type the name of the config (including _defconfig if the name includes that)"
-  echo "The config must be located in arch/arm/configs"
+  echo "${t_bold} Type the name of the config (including _defconfig if the name includes that)${t_normal}"
+  echo " The config must be located in arch/arm/configs"
+  echo
   read enterConfig
+
   # Create a variable that stores command for see if config is existing
   FN=$(find arch/arm/configs/$enterConfig)
+
   # If the variable returns same as config path then the config is ok
   if [ "$FN" == "arch/arm/configs/$enterConfig" ]
-   then
-    echo "Config exists, making now..."
-    make $enterConfig -j`grep processor /proc/cpuinfo | wc -l`
-    echo "New config made, press enter to continue..."
-    read enterKey
-    ../../BCMKAMM/scripts/tools_menu
+    then
+
+      # Make the custom config
+      echo
+      echo "${t_bold} SELECTING THE DEFCONFIG --> $enterConfig${t_normal}"
+      echo
+      make $enterConfig -j`grep processor /proc/cpuinfo | wc -l`
+
+      # Back with new defconfig
+      echo
+      echo "${t_bold} New config made, press enter to continue...${t_normal}"
+      read enterKey
+      ../../BCMKAMM/scripts/tools_menu
+
   else
+
+    # Error on defconfig (does not exist)
     echo "Config does not exist, please check the name and retry"
     read enterKey
     ../../BCMKAMM/scripts/tools_menu
+
   fi

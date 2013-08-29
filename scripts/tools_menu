@@ -22,15 +22,19 @@
 # Menucofnig variables
   export Option=""
 
-# Introducing test 
+# Introducing text 
   echo
   echo "${t_bold}-----------------------------------"
   echo " BroadcomCM kernel auto-maker menu"
   echo "-----------------------------------"
   echo "${t_normal} Version $version"
   echo
-  echo " Device selected is $KBUILD_BCM_MENU"
-  echo
+  if [ "$defconfig" == "cyanogenmod_$KBUILD_BCM_MENU""_defconfig" ]
+    then
+      echo " $defconfig is selected"
+  else
+    echo " Custom defconfig is selected"
+  fi
   echo
 
 # Question:
@@ -38,10 +42,14 @@
 
 # Options:
   echo "   a. Make Menuconfig"
-  echo "   b. Make Menuconfig with saving new config to cyanogenmod_$KBUILD_BCM_MENU''_defconfig"
+
+  if [ "$defconfig" == "cyanogenmod_$KBUILD_BCM_MENU""_defconfig" ]
+    then
+      echo "   b. Make Menuconfig with saving new config to cyanogenmod_$KBUILD_BCM_MENU""_defconfig"
+  fi
   echo "   c. Make Menuconfig with saving new config to input name"
   echo
-  echo "   d. Load another defconfig"
+  echo "   d. Load a custom defconfig"
   echo
   echo "   e. Make clean"
   echo "   f. Make distclean"
@@ -50,8 +58,8 @@
   echo "   h. Make kernel zImage + boot.img with common ramdisk"
   echo "   i. Make kernel zImage + boot.img with yours ramdisk"
   echo
-  echo "   j. Exit"
-  echo "   k. Restart"
+  echo "   x. Exit"
+  echo "   r. Restart"
 
 # Read letter user gives
   read enterLetter
@@ -127,12 +135,17 @@
       read enterKey10
       ../../BCMKAMM/scripts/tools_menu
 
-  elif [ "$enterLetter" == "j" ]
+  elif [ "$enterLetter" == "x" ]
     then
       ../../BCMKAMM/scripts/exit_script
 
-  elif [ "$enterLetter" == "k" ]
+  elif [ "$enterLetter" == "r" ]
     then
       ../../BCMKAMM/menu
+
+  else
+    echo "Wrong command, press enter to try again"
+    read enterKey11
+    ../../BCMKAMM/scripts/tools_menu
 
 fi
