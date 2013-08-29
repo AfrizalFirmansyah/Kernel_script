@@ -4,6 +4,7 @@ BroadcomCM kernel auto-maker menu
 Quick Summary:
  * This script is used to build a kernel for all the BroadcomCM devices using a common source. Due to all the devices have a common source and different modules, this script will identify each of the device you select and build a working zImage for each. This menu will also include an option to pack the ramdisk automaticly before zImage is done.
  * Our kernel are included on GPL License, so this Menu will be also open sourced and everyone can contribute to help us.
+ * This script should be with Kernel, Ramdisk folder. Inside Kernel folder common and modules_$DEVICE and Ramdisk files inside Ramdisk folder
 
 TO-DO List
  * Be able to start the script
