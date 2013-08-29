@@ -33,7 +33,6 @@ export CROSS_COMPILE=$toolChain
 # Moving to correct path
 cd ..
 cd kernel
-ls
 
 # Renaming modules dir
 echo "Renaming modules dir from 'modules_$KBUILD_BCM_MENU' to 'modules'"

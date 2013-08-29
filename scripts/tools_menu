@@ -57,7 +57,7 @@
   if [ "$enterLetter" == "a" ]
     then
       make menuconfig
-      ../../BCMKAMM/scripts/make_menuconfig
+      ../../BCMKAMM/scripts/tools_menu
 
   elif [ "$enterLetter" == "b" ]
     then
