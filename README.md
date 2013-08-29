@@ -1,6 +1,8 @@
 BroadcomCM kernel auto-maker menu
 =================================
 
+This script should be in android/kernel/samsung/bcm21553-common/BCMKAMM
+
 Quick Summary:
 --------------
  * This script is used to build a kernel for all the BroadcomCM devices using a common source. Due to all the devices have a common source and different modules, this script will identify each of the device you select and build a working zImage for each. This menu will also include an option to pack the ramdisk automaticly before zImage is done.
@@ -11,7 +13,7 @@ Quick Setup
  * This script should be with *kernel* and *ramdisk* folder. 
  * Inside *kernel* folder you should have *common* and *modules_device* folders.
  * Inside *ramdisk* folder the Ramdisk files.
- * Open *menu* file and follow isntructions.
+ * Open *menu* file and follow instructions.
 
 TO-DO List
 ----------
