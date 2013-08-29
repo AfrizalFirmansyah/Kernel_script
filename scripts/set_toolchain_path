@@ -18,10 +18,6 @@
 
 clear
 
-# Create bold and normal types of letter
-export t_bold=`tput bold`
-export t_normal=`tput sgr0`
-
 # Introducing test 
   echo
   echo "${t_bold}-----------------------------------"
@@ -57,7 +53,7 @@ if [ "$ELD" == "$enterPath"ld"" ]
     # Create the toolchain_path script
     echo -e "#!/bin/bash \n
     # DO NOT DELETE THIS FILE!!! \n
-    cd ../
+    cd .. \n
     cd Kernel/common \n 
     export ARCH=arm \n 
     export CROSS_COMPILE=$enterPath \n
