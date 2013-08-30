@@ -16,10 +16,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 
-# If option = a make only zImage
-if [ "$ZIMAGE" == "a" ]
-  then
-
     echo
     echo "${t_bold} Starting build of kernel... ${t_normal}"
     echo
@@ -48,7 +44,20 @@ if [ "$ZIMAGE" == "a" ]
 
         read enterKey
 
+        # Common ramdisk selected to be packed
+        if [ "$RAMDISK" == "a" ]
+          then
+            ../../BCMKAMM/scripts/make_common_ramdisk
+
+        # Custom ramdisk selected to be packed
+        elif [ "$RAMDISK" == "b" ]
+          then
+            ../../BCMKAMM/scripts/make_custom_ramdisk
+        
+        else
         ../../BCMKAMM/scripts/tools_menu
+
+        fi
 
     # If zImage does not exists then there was a build error
     else
@@ -64,5 +73,3 @@ if [ "$ZIMAGE" == "a" ]
 
         ../../BCMKAMM/scripts/tools_menu
     fi
-fi
-

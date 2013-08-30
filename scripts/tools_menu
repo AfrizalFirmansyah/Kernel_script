@@ -110,24 +110,24 @@
   elif [ "$enterLetter" == "g" ]
     then
 
-      export ZIMAGE="a"
-
       # Start ZIMAGE script
       ../../BCMKAMM/scripts/make_kernel
 
 # OPTION H
   elif [ "$enterLetter" == "h" ]
     then
-      echo ZONE WORK IN PROGRESS...
-      read enterKey9
-      ../../BCMKAMM/scripts/tools_menu
+      export RAMDISK="a"
+
+      # Start ZIMAGE script
+      ../../BCMKAMM/scripts/make_kernel
 
 # OPTION I
   elif [ "$enterLetter" == "i" ]
     then
-      echo ZONE WORK IN PROGRESS...
-      read enterKey10
-      ../../BCMKAMM/scripts/tools_menu
+      export RAMDISK="b"
+
+      # Start ZIMAGE script
+      ../../BCMKAMM/scripts/make_kernel
 
 # OPTION X - EXIT
   elif [ "$enterLetter" == "x" ]
