@@ -1,0 +1,74 @@
+#!/bin/bash
+ 
+#    BroadcomCM kernel auto-maker menu - scripts/load_new_config
+#    Copyright (C) 2013  Team BroadcomCM
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+
+# export to be sure
+scripts/toolchain_path
+export ARCH=arm 
+export CROSS_COMPILE=$toolChain
+
+# if option = a make only zImage
+if [ "$ZIMAGE" == "a" ]
+  then
+
+    echo
+    echo "${t_bold} Starting build of kernel... ${t_normal}"
+    echo
+    echo " Press enter to continue"
+
+    read enterKey
+
+    # make -j(find number of threads)
+    make -j`grep processor /proc/cpuinfo | wc -l`
+
+    # if zImage exists then build is went fine
+
+    if test -e arch/arm/boot/zImage
+
+      then
+        mkdir ../../BCMKAMM/out
+
+        # copy zImage to out folder
+        cp arch/arm/boot/zImage ../../BCMKAMM/out/zImage
+
+        echo
+        echo "${t_bold} zImage is done without errors! ${t_normal}"
+        echo
+        echo " You can find it in BCMKAMM/out"
+        echo
+        echo " Press enter to continue"
+
+        read enterKey
+
+        ../../BCMKAMM/scripts/tools_menu
+
+    # if zImage does not exists then there was a build error
+    else
+
+        echo
+        echo "${t_bold} zImage building: ERROR!!! ${t_normal}"
+        echo
+        echo " Please check your last modifications to source or config..."
+        echo
+        echo " Press enter to continue"
+
+        read enterKey
+
+        ../../BCMKAMM/scripts/tools_menu
+    fi
+fi
+

@@ -1,6 +1,6 @@
 #!/bin/bash
  
-#    BroadcomCM kernel auto-maker menu - scripts/tools_menu
+#    BroadcomCM kernel auto-maker menu - scripts/load_new_config
 #    Copyright (C) 2013  Team BroadcomCM
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -18,9 +18,6 @@
   
 # Clear the console
   clear
-
-# Variale defconfig changed to custom
-  export defconfig="custom"
 
 # Introducing text 
   echo
@@ -45,13 +42,16 @@
 
       # Make the custom config
       echo
-      echo "${t_bold} SELECTING THE DEFCONFIG --> $enterConfig${t_normal}"
+      echo "${t_bold} SELECTING THE DEFCONFIG --> $enterConfig ${t_normal}"
       echo
       make $enterConfig -j`grep processor /proc/cpuinfo | wc -l`
 
       # Back with new defconfig
       echo
-      echo "${t_bold} New config made, press enter to continue...${t_normal}"
+      echo "${t_bold} New config made, press enter to continue... ${t_normal}"
+
+      # Change defconfig variable to thee new one
+      export defconfig=$enterConfig
       read enterKey
       ../../BCMKAMM/scripts/tools_menu
 
@@ -60,6 +60,6 @@
     # Error on defconfig (does not exist)
     echo "Config does not exist, please check the name and retry"
     read enterKey
-    ../../BCMKAMM/scripts/tools_menu
+    ../../BCMKAMM/scripts/load_new_defconfig
 
   fi

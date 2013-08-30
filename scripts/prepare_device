@@ -21,6 +21,8 @@ clear
 
 # Write wich device we choose
 echo "${t_bold} Your device is $KBUILD_BCM_MENU ${t_normal}"
+echo
+echo "${t_bold} Defconfig is cyanogen_$KBUILD_BCM_MENU''_defconfig ${t_normal}"
 
 clear
 
@@ -31,8 +33,7 @@ export ARCH=arm
 export CROSS_COMPILE=$toolChain
 
 # Add a defconfig variable
-export defconfig=""
-defconfig=cyanogenmod_$KBUILD_BCM_MENU""_defconfig
+export defconfig=cyanogenmod_$KBUILD_BCM_MENU''_defconfig
 
 # Moving to correct path
 cd ..

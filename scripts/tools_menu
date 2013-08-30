@@ -19,9 +19,6 @@
 # Clear the console
   clear
 
-# Menucofnig variables
-  export Option=""
-
 # Introducing text 
   echo
   echo "${t_bold}-----------------------------------"
@@ -29,12 +26,7 @@
   echo "-----------------------------------"
   echo "${t_normal} Version $version"
   echo
-  if [ "$defconfig" == "cyanogenmod_$KBUILD_BCM_MENU""_defconfig" ]
-    then
-      echo " $defconfig is selected"
-  else
-    echo " Custom defconfig is selected"
-  fi
+  echo " $defconfig is selected"
   echo
 
 # Question:
@@ -42,14 +34,10 @@
 
 # Options:
   echo "   a. Make Menuconfig"
-
-  if [ "$defconfig" == "cyanogenmod_$KBUILD_BCM_MENU""_defconfig" ]
-    then
-      echo "   b. Make Menuconfig with saving new config to cyanogenmod_$KBUILD_BCM_MENU""_defconfig"
-  fi
+  echo "   b. Make Menuconfig replacing old $defconfig with new one"
   echo "   c. Make Menuconfig with saving new config to input name"
   echo
-  echo "   d. Load a custom defconfig"
+  echo "   d. Load another defconfig"
   echo
   echo "   e. Make clean"
   echo "   f. Make distclean"
@@ -64,88 +52,97 @@
 # Read letter user gives
   read enterLetter
 
-# OPTION A
+# OPTION A - MENUCONFIG
   if [ "$enterLetter" == "a" ]
     then
 
-      Option="a"
+      export MENUCONFIG="a"
 
-      # Start menuconfig scripts
+      # Start menuconfig script
       ../../BCMKAMM/scripts/make_menuconfig
 
 
-# OPTION B
+# OPTION B - MENUCONFIG + SAVE NEW
   elif [ "$enterLetter" == "b" ]
     then
 
-      Option="b"
+      export MENUCONFIG="b"
       
-      # Start menuconfig scripts
+      # Start menuconfig script
       ../../BCMKAMM/scripts/make_menuconfig
 
 
-# OPTION C
+# OPTION C - MENUCONFIG + SAVE ANOTHER NAME
   elif [ "$enterLetter" == "c" ]
     then
 
-       Option="c"
+       export MENUCONFIG="c"
       
-      # Start menuconfig scripts
+      # Start menuconfig script
       ../../BCMKAMM/scripts/make_menuconfig
 
 
-# OPTION D
+# OPTION D - LOAD ANOTHER CONFIG
   elif [ "$enterLetter" == "d" ]
     then
+
       ../../BCMKAMM/scripts/load_new_config
 
+# OPTION E - MAKE CLEAN
   elif [ "$enterLetter" == "e" ]
     then
-      echo "Making clean..."
-      make clean -j`grep processor /proc/cpuinfo | wc -l`
-      echo "Press enter to continue"
-      read enterKey6
-      ../../BCMKAMM/scripts/tools_menu
 
+      export MAKECLEAN="a"
+
+      # Start make clean script
+      ../../BCMKAMM/scripts/make_clean
+
+# OPTION F - MAKE DISTCLEAN
   elif [ "$enterLetter" == "f" ]
     then
-      echo "Making dist clean..."
-      make distclean -j`grep processor /proc/cpuinfo | wc -l`
-      echo "Press enter to continue"
-      read enterKey7
-      ../../BCMKAMM/scripts/tools_menu
 
+      export MAKECLEAN="b"
+
+      # Start make clean script
+      ../../BCMKAMM/scripts/make_clean
+
+# OPTION G - MAKE ZIMAGE
   elif [ "$enterLetter" == "g" ]
     then
-      echo "Starting build of kernel..."
-      echo "Press enter to continue..."
-      read enterKey8
-      make
-      ../../BCMKAMM/scripts/tools_menu
 
+      export ZIMAGE="a"
+
+      # Start ZIMAGE script
+      ../../BCMKAMM/scripts/make_kernel
+
+# OPTION H
   elif [ "$enterLetter" == "h" ]
     then
       echo ZONE WORK IN PROGRESS...
       read enterKey9
       ../../BCMKAMM/scripts/tools_menu
 
+# OPTION I
   elif [ "$enterLetter" == "i" ]
     then
       echo ZONE WORK IN PROGRESS...
       read enterKey10
       ../../BCMKAMM/scripts/tools_menu
 
+# OPTION X - EXIT
   elif [ "$enterLetter" == "x" ]
     then
       ../../BCMKAMM/scripts/exit_script
 
+# OPTION R - RESTART
   elif [ "$enterLetter" == "r" ]
     then
       ../../BCMKAMM/menu
 
+# WRONG OPTION
   else
     echo "Wrong command, press enter to try again"
-    read enterKey11
+    read enterKey
     ../../BCMKAMM/scripts/tools_menu
 
 fi

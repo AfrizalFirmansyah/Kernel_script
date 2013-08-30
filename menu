@@ -39,7 +39,7 @@
   echo
 
 # if firstboot file is not created launch toolchain set
-if test -e .fboot
+if test -e scripts/toolchain_path
 then
    echo " Toolchain already set, going away..."
 else
@@ -47,9 +47,6 @@ else
    echo " Press enter to continue"
    read enterPress
    scripts/set_toolchain_path
-   touch .fboot
-   echo DO NOT DELETE THIS FILE!!! > .fboot
-   chmod 440 .fboot
 fi
 
 # Clear the console before starting
