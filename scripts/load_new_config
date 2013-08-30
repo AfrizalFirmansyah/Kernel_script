@@ -50,8 +50,10 @@
       echo
       echo "${t_bold} New config made, press enter to continue... ${t_normal}"
 
-      # Change defconfig variable to thee new one
+      # Change defconfig variable to the new one
       export defconfig=$enterConfig
+
+      # Back to menu
       read enterKey
       ../../BCMKAMM/scripts/tools_menu
 

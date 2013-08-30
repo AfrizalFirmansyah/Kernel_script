@@ -16,12 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 
-# export to be sure
-scripts/toolchain_path
-export ARCH=arm 
-export CROSS_COMPILE=$toolChain
-
-# if option = a make only zImage
+# If option = a make only zImage
 if [ "$ZIMAGE" == "a" ]
   then
 
@@ -35,14 +30,13 @@ if [ "$ZIMAGE" == "a" ]
     # make -j(find number of threads)
     make -j`grep processor /proc/cpuinfo | wc -l`
 
-    # if zImage exists then build is went fine
-
+    # If zImage exists then build is went fine
     if test -e arch/arm/boot/zImage
 
       then
         mkdir ../../BCMKAMM/out
 
-        # copy zImage to out folder
+        # Copy zImage to out folder
         cp arch/arm/boot/zImage ../../BCMKAMM/out/zImage
 
         echo
@@ -56,7 +50,7 @@ if [ "$ZIMAGE" == "a" ]
 
         ../../BCMKAMM/scripts/tools_menu
 
-    # if zImage does not exists then there was a build error
+    # If zImage does not exists then there was a build error
     else
 
         echo
