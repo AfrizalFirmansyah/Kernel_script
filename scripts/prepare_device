@@ -26,11 +26,8 @@ echo "${t_bold} Defconfig is cyanogen_$KBUILD_BCM_MENU''_defconfig ${t_normal}"
 
 clear
 
-scripts/toolchain_path
-
-# Prepare for building the kernel
-export ARCH=arm 
-export CROSS_COMPILE=$toolChain
+# Source the exports
+source scripts/toolchain_path
 
 # Add a defconfig variable
 export defconfig=cyanogenmod_$KBUILD_BCM_MENU''_defconfig
@@ -49,19 +46,19 @@ cd common
 echo
 echo "${t_bold} MAKE CLEAN...${t_normal}"
 echo
-  make clean
+  make clean -j`grep processor /proc/cpuinfo | wc -l`
 
 # Make distclean
 echo
 echo "${t_bold} MAKE DISTCLEAN...${t_normal}"
 echo
-  make distclean
+  make distclean -j`grep processor /proc/cpuinfo | wc -l`
   
 # Make cyanogenmod_device_defconfig
 echo
 echo "${t_bold} SELECTING THE DEFCONFIG --> $defconfig${t_normal}"
 echo
-  make $defconfig
+  make $defconfig -j`grep processor /proc/cpuinfo | wc -l`
 
 # Press enter and go to the build menu
 echo
