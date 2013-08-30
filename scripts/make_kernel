@@ -23,7 +23,7 @@
 
     read enterKey
 
-    # make -j(find number of threads)
+    # make -j(find number of threads) - DON'T DO THIS YET! WE KNOW IT WORKS, SPEED UP!
     # make -j`grep processor /proc/cpuinfo | wc -l`
 
     # If zImage exists then build is went fine
