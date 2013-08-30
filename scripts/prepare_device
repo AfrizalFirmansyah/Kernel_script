@@ -46,13 +46,13 @@ cd common
 echo
 echo "${t_bold} MAKE CLEAN...${t_normal}"
 echo
-  make clean -j`grep processor /proc/cpuinfo | wc -l`
+  #make clean -j`grep processor /proc/cpuinfo | wc -l` ################################################################################
 
 # Make distclean
 echo
 echo "${t_bold} MAKE DISTCLEAN...${t_normal}"
 echo
-  make distclean -j`grep processor /proc/cpuinfo | wc -l`
+  #####make distclean -j`grep processor /proc/cpuinfo | wc -l` ################################################
   
 # Make cyanogenmod_device_defconfig
 echo
