@@ -23,7 +23,7 @@
 # OPTION A - Simple menuconfig
   if [ "$MENUCONFIG" == "a" ]
    then
-    echo "New configuration saved, press enter to continue..."
+    echo "${t_bold} New configuration saved,${t_normal} press enter to continue..."
     read enterkey
 
     # Come back to menu
@@ -36,8 +36,8 @@
    then    
       # Copy the modded .config
       cp .config arch/arm/configs/$defconfig
-      echo "Old defconfig has been replaced with new one"
-      echo "Press enter to continue..."
+      echo "${t_bold} Old defconfig has been replaced with new one${t_normal}"
+      echo " Press enter to continue..."
       read enterKey
       
       # Come back to menu
@@ -49,14 +49,14 @@
   if [ "$MENUCONFIG" == "c" ]
     then
       # Enter the config name
-      echo "Enter your new defconfig name... (excluding _defconfig)"
+      echo "${t_bold} Enter your new defconfig name...${t_normal} (excluding _defconfig)"
       read enterName
 
       # If nothing on name
       if [ "$enterName" == "" ]
         then
-        echo "You must choose a name for your defconfig"
-        echo "Press enter to retry..."
+        echo "${t_bold} You must choose a name for your defconfig${t_normal}"
+        echo " Press enter to retry..."
         read enterKey
         
         # Restart script
@@ -67,7 +67,7 @@
 
         # Copy the file
         cp .config arch/arm/configs/$enterName''_defconfig
-        echo "Config saved, press enter to continue"
+        echo "${t_bold} Config saved,${t_normal} press enter to continue"
         read enterKey
 
         # Come back to menu
