@@ -1,9 +1,0 @@
-#!/bin/bash 
-
-# DO NOT DELETE THIS FILE!!! 
- 
-# Variable to store toolchain 
-
-export ARCH=arm 
-
-export CROSS_COMPILE=/home/matteo/CodeSourcery/Sourcery_G++_Lite/bin/arm-none-eabi-

@@ -10,7 +10,7 @@
 #
 ############################################################################
 
-temp=`od -A n -H -j 20 -N 4 boot.img | sed 's/ //g'`
+temp=`od -A n -H -j 20 -N 4 .check.img | sed 's/ //g'`
 ramdisk_load_addr=0x$temp
 
 echo $ramdisk_load_addr

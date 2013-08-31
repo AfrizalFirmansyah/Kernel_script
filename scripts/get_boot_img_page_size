@@ -10,11 +10,8 @@
 #
 ############################################################################
 
-cd out
+page_size=`od -A n -D -j 36 -N 4 .check.img | sed 's/ //g'`
 
-page_size=`od -A n -D -j 36 -N 4 boot.img | sed 's/ //g'`
-
-cd ../
 echo $page_size
 
 
