@@ -1,0 +1,254 @@
+#!/bin/bash
+
+############################################################################
+#
+# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+#
+# Android Kitchen is 100% free.  This script file is intended for personal
+# and/or educational use only.  It may not be duplicated for monetary
+# benefit or any other purpose without the permission of the developer.
+#
+############################################################################
+
+#
+# This script has three optional parameters:
+#
+# $1 = page size / kernel offset in boot.img (in decimal)
+# $2 = kernel base offset (in hexadecimal, e.g. 0x200000; needs $1 defined)
+# $3 = command line (needs $1 and $2 defined)
+#
+
+echo
+
+cp -R ../ramdisk out/ramdisk
+
+if [ -d out ]
+then
+  echo "Found out folder, checking contents ..."
+
+  if [ -e out/zImage ]
+  then
+    echo "Found zImage"
+
+    if [ -d out/ramdisk ]
+    then
+      echo "Found ramdisk folder!"
+    else
+      echo "Did not find ramdisk folder!"
+      echo "Press enter to retry"
+      read enterKey
+      scripts/tools_menu
+    fi
+
+  else
+    echo "Did not find ramdisk folder!"
+    echo "Press enter to retry"
+    read enterKey
+    scripts/tools_menu
+  fi
+
+else
+  echo "Did not find out folder!"
+  read enterKey
+  scripts/tools_menu
+fi
+
+
+if [ "$1" == "" ]
+then
+
+  #
+  # Determine the kernel offset to be used in the new boot.img, 
+  # based on the current boot.img or /boot folder.
+  #
+
+  cd out
+
+  if [ -e boot.img ] 
+  then
+   
+    cd ../
+    scripts/check_kernel_offset
+    res=$?
+
+    if [ "$res" != "0" ]
+    then
+      exit 0
+    fi
+  fi
+
+else
+
+  #
+  # Using hard-coded values 
+  #
+
+  scripts/set_kernel_offset_files $1
+
+  if [ "$2" != "" ]
+  then
+    base=$2
+    
+    if [ "$3" != "" ]
+    then
+      cmd_line=$3
+    fi
+  fi
+
+fi
+
+
+#
+# Compile mkboot*
+#
+
+mkbootimg_src=mkbootimg.c
+mkbootimg_out=mkbootimg
+mkbootfs_file=mkbootfs
+mkbootimg_file=$mkbootimg_out
+
+if [ -e tools/mkboot/$mkbootfs_file ]
+then
+  echo "Found $mkbootfs_file"
+else
+  echo
+  echo "Compiling mkbootfs ..."
+  cd tools/mkboot
+  gcc -o mkbootfs mkbootfs.c 2>/dev/null
+  cd ../../
+
+  if [ -e tools/mkboot/$mkbootfs_file ]
+  then
+    echo mkbootfs successfully compiled
+  else
+    echo "Error: mkbootfs not successfully compiled!"
+    exit 0   
+  fi
+fi
+
+
+if [ -e tools/mkboot/$mkbootimg_file ]
+then
+  rm -f $mkbootimg_file
+fi
+
+echo
+echo "Compiling mkbootimg ..."
+cd tools/mkboot
+gcc -c rsa.c
+gcc -c sha.c
+gcc rsa.o sha.o $mkbootimg_src -w -o $mkbootimg_out
+rm *.o
+cd ../../
+
+if [ -e tools/mkboot/$mkbootimg_file ]
+then
+  echo "$mkbootimg_out successfully compiled"
+else
+  echo "Error: $mkbootimg_out not successfully compiled!"
+  exit 0
+fi    
+
+
+cp tools/mkboot/$mkbootfs_file out/
+cp tools/mkboot/$mkbootimg_file out/
+cd out
+
+
+#
+# Run mkbootfs
+#
+
+echo 
+echo "Creating ramdisk cpio archive ..."
+./$mkbootfs_file ramdisk | lzma > ramdisk.gz
+
+cd ..
+
+if [ -e .check.img ]
+then
+
+  echo
+
+  #
+  # Get original size of boot.img
+  #
+  size_orig=`scripts/get_boot_img_size`
+
+
+  #
+  # Determine kernel base address before running mkbootimg
+  #
+
+  if [ "$base" == "" ]
+  then
+    echo "Attempting to determine kernel base address ..."
+    base=`scripts/get_kernel_base_addr`
+  fi
+
+  echo "Using base address of $base"
+
+ 
+  #
+  # Determine ramdisk load address
+  #
+  ramdisk_addr=`scripts/get_ramdisk_addr`
+
+  echo "Using ramdisk load address of $ramdisk_addr"
+else
+
+  echo "check.img not found, be sure you did not delete it!"
+  exit 1
+
+fi  
+
+
+#################################################
+#
+# Run mkbootimg to build new boot.img
+#
+#################################################
+
+cd out
+
+echo
+echo "Building new boot.img ..."
+
+ramdisk_params=""
+if [ "$ramdisk_addr" != "" ]
+then
+  ramdisk_params="--ramdiskaddr $ramdisk_addr"
+fi
+
+
+./$mkbootimg_file --kernel zImage --ramdisk ramdisk.gz -o boot.img --base $base $ramdisk_params
+
+
+if [ -e boot.img ]
+then
+  echo
+  echo "boot.img created"
+
+  echo "You can find it in out folder!"
+
+  echo "Cleaning up..."
+  
+  rm zImage
+  rm -r ramdisk
+  cd ../
+  
+
+else
+  echo
+  echo "boot.img not created!"
+
+  rm $mkbootfs_file
+  rm $mkbootimg_file
+
+  cd ../
+  exit_code=0
+fi
+
+echo "Press enter to continue..."
+read enterKey
+./scripts/tools_menu

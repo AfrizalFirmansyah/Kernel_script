@@ -113,7 +113,7 @@
       # Start ZIMAGE script
       ../../BCMKAMM/scripts/make_kernel
 
-# OPTION H
+# OPTION H - MAKE ZIMAGE + BOOTIMG (COMMON RAMDISK)
   elif [ "$enterLetter" == "h" ]
     then
       export RAMDISK="a"
@@ -121,7 +121,7 @@
       # Start ZIMAGE script
       ../../BCMKAMM/scripts/make_kernel
 
-# OPTION I
+# OPTION I - MAKE ZIMAGE + BOOTIMG (USER RAMDISK)
   elif [ "$enterLetter" == "i" ]
     then
       export RAMDISK="b"

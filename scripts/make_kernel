@@ -1,6 +1,6 @@
 #!/bin/bash
  
-#    BroadcomCM kernel auto-maker menu - scripts/load_new_config
+#    BroadcomCM kernel auto-maker menu - scripts/make_kernel
 #    Copyright (C) 2013  Team BroadcomCM
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -16,66 +16,61 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 
-    echo
-    echo "${t_bold} Starting build of kernel... ${t_normal}"
-    echo
-    echo " Press enter to continue"
+  echo
+  echo "${t_bold} Starting build of kernel... ${t_normal}"
+  echo
+  echo " Press enter to continue"
 
-    read enterKey
+  read enterKey
 
-    # make -j(find number of threads) - DON'T DO THIS YET! WE KNOW IT WORKS, SPEED UP!
-    # make -j`grep processor /proc/cpuinfo | wc -l`
+  # make -j`grep processor /proc/cpuinfo | wc -l`    
 
-    # If zImage exists then build is went fine
-    if test -e arch/arm/boot/zImage
+  # If zImage exists then build is went fine
+  if test -e arch/arm/boot/zImage
 
-      then
-        mkdir ../../BCMKAMM/out
+    then
+      mkdir ../../BCMKAMM/out
 
-        # Copy zImage to out folder
-        cp arch/arm/boot/zImage ../../BCMKAMM/out/zImage
+      # Copy zImage to out folder
+      cp arch/arm/boot/zImage ../../BCMKAMM/out/zImage
 
-        echo
-        echo "${t_bold} zImage is done without errors! ${t_normal}"
-        echo
-        echo " You can find it in BCMKAMM/out"
-        echo
-        echo " Press enter to continue"
+      echo
+      echo "${t_bold} zImage is done without errors! ${t_normal}"
+      echo
+      echo " You can find it in BCMKAMM/out"
+      echo
+      echo " Press enter to continue"
 
-        read enterKey
+      read enterKey
 
-        # Common ramdisk selected to be packed
-        if [ "$RAMDISK" == "a" ]
-          then
-            export commonRamdiskPath=../../ramdisk
+      # Common ramdisk selected to be packed
+      if [ "$RAMDISK" == "a" ]
+        then
+          cd ../../BCMKAMM
+          scripts/build_boot_img_lzma
 
-            ../../BCMKAMM/scripts/make_common_ramdisk
-
-        # Custom ramdisk selected to be packed
-        elif [ "$RAMDISK" == "b" ]
-          then
-            
-            read ramdiskPath
-            export customRamdiskPath=$ramdiskPath
-
-            ../../BCMKAMM/scripts/make_custom_ramdisk
+      # Custom ramdisk selected to be packed
+      elif [ "$RAMDISK" == "b" ]
+        then
+           
+          echo 
         
-        else
-        ../../BCMKAMM/scripts/tools_menu
+      else
+      ../../BCMKAMM/scripts/tools_menu
 
-        fi
+      fi
 
-    # If zImage does not exists then there was a build error
-    else
+  # If zImage does not exists then there was a build error
+  else
 
-        echo
-        echo "${t_bold} zImage building: ERROR!!! ${t_normal}"
-        echo
-        echo " Please check your last modifications to source or config..."
-        echo
-        echo " Press enter to continue"
+      echo
+      echo "${t_bold} zImage building: ERROR!!! ${t_normal}"
+      echo
+      echo " Please check your last modifications to source or config..."
+      echo
+      echo " Press enter to continue"
 
-        read enterKey
+      read enterKey
 
-        ../../BCMKAMM/scripts/tools_menu
-    fi
+      ../../BCMKAMM/scripts/tools_menu
+  fi
